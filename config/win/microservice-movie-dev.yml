@@ -27,4 +27,4 @@ feign:
 
 logging:
   level:
-    net.lovexq.demo.cloud.movie.client: INFO
+    net.lovexq.demo.cloud.movie.client: DEBUG
