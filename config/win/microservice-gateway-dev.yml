@@ -1,5 +1,5 @@
 server:
-  port: 9031-win
+  port: 9031
 spring:
   application:
     name: microservice-gateway
