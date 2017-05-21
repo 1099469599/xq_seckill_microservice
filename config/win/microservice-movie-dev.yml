@@ -10,7 +10,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://user:password123@eureka1:9001/eureka/
+      defaultZone: '{cipher}6b0607b9f5b757a208b2e9ab30ab84b3223c11e5ad56319f76454382a2d19abf70f7f247d5a05fe7dc7aac340f51b61c3f43951f890484e5624eee722a733b89'
   instance:
     prefer-ip-address: true
   healthcheck:
