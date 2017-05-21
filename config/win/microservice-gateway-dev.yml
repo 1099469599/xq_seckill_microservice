@@ -3,15 +3,11 @@ server:
 spring:
   application:
     name: microservice-gateway
-  datasource:
-    username: dbuser
-    password: '{cipher}31294b8df910096c04db7c95721db2e7841f376d91d0b4bd8d3a236c7aca9f84'
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://user:password123@eureka1:9001/eureka/
-#      defaultZone: http://eureka1:9001/eureka/,http://eureka2:9002/eureka/,http://eureka3:9003/eureka/
+      defaultZone: '${cipher}/a537ad3f8aa1d682cc28244c82e0fbe665f7a2897501956510ede0bc59da2a23736f4c98545f3508c123dc8c6ff23a178dc4d99571952a5e9e8c7ec2b45369aa'
   instance:
     prefer-ip-address: true
   healthcheck:

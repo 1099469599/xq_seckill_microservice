@@ -1,0 +1,34 @@
+server:
+  port: 10011
+
+spring:
+  application:
+    name: microservice-movie
+  rabbitmq:
+    host: 192.168.31.148
+    port: 5673
+    username: '${cipher}cbc0a2da8b8c0c7396d9b800a649df2ac7767e47e763ce4cac6729d4797ead26'
+    password: '${cipher}cbc0a2da8b8c0c7396d9b800a649df2ac7767e47e763ce4cac6729d4797ead26'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: '${cipher}/a537ad3f8aa1d682cc28244c82e0fbe665f7a2897501956510ede0bc59da2a23736f4c98545f3508c123dc8c6ff23a178dc4d99571952a5e9e8c7ec2b45369aa'
+
+  instance:
+    prefer-ip-address: true
+  healthcheck:
+    enabled: true
+
+feign:
+  compression:
+    request:
+      enabled : true
+      mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript;
+      min-request-size: 1024
+    response:
+      enabled : true
+
+logging:
+  level:
+    net.lovexq.demo.cloud.movie.client: DEBUG
