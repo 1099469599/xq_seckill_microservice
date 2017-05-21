@@ -10,7 +10,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: '{cipher}/a537ad3f8aa1d682cc28244c82e0fbe665f7a2897501956510ede0bc59da2a23736f4c98545f3508c123dc8c6ff23a178dc4d99571952a5e9e8c7ec2b45369aa'
+      defaultZone: '{cipher}a537ad3f8aa1d682cc28244c82e0fbe665f7a2897501956510ede0bc59da2a23736f4c98545f3508c123dc8c6ff23a178dc4d99571952a5e9e8c7ec2b45369aa'
 
   instance:
     prefer-ip-address: true
