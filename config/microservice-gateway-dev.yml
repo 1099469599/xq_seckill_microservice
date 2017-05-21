@@ -1,5 +1,5 @@
 server:
-  port: 90313
+  port: 90312
 spring:
   application:
     name: microservice-gateway
