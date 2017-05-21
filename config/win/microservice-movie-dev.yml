@@ -1,6 +1,3 @@
-server:
-  port: 10011
-
 spring:
   application:
     name: microservice-movie
