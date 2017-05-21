@@ -1,4 +1,6 @@
 target/
+application/foreground/produce
+application/foreground/resources/3rd-party
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
