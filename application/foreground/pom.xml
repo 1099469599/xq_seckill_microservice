@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
 	<name>Application Foreground</name>
-    <description>Foreground - 前台模块</description>
+    <description>Foreground - 前台</description>
 
     <parent>
         <groupId>net.lovexq.seckill</groupId>
