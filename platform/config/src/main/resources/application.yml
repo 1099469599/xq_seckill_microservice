@@ -1,0 +1,38 @@
+server:
+  port: 9011
+
+spring:
+  application:
+    name: platform-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/lupindong/xq_seckill_microservice
+          search-paths: config/win
+          username: lupindong@gmail.com
+          password: 503786-lpd-giT
+  rabbitmq:
+    host: 192.168.31.148
+    port: 5673
+    username: guest
+    password: guest
+
+encrypt:
+  key: config.lovexq.net
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:9001/eureka/
+  instance:
+    hostname: eureka1
+  healthcheck:
+    enabled: true
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: platform
+    password: p1atf0rmds*lovexq.NET

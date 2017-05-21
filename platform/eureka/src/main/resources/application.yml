@@ -1,0 +1,20 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: platform-eureka
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:9001/eureka/
+  instance:
+    hostname: eureka1
+
+security:
+  basic:
+    enabled: true
+  user:
+    name: platform
+    password: p1atf0rmds*lovexq.NET

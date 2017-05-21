@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: platform-zuul
+
+eureka:
+  instance:
+    prefer-ip-address: true
