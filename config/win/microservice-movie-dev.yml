@@ -22,4 +22,4 @@ feign:
 
 logging:
   level:
-    net.lovexq.demo.cloud.movie.client: DEBUG
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
