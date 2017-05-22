@@ -15,7 +15,7 @@ feign:
   compression:
     request:
       enabled : true
-      mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript;
+      mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript
       min-request-size: 1024
     response:
       enabled : true
