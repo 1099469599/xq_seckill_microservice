@@ -15,9 +15,9 @@ app:
         url: jdbc:mysql://127.0.0.1:33006/db_seckill_microservice?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
         username: seckill_app
         password: '{cipher}92a29dca9aee91d3f468a01079fc6f6f0290cab4dc780a340e2e941d101abf02b6c0435a986d2d773db59ecd0a0e2e44'
-  privateSalt: 29bf9a9a$2dcc$11e7$a638$0090f5f26733
-  publicSalt: 29bf9a9a&2dcc&11e7&a638&0090f5f26733
-  jwtSecretKey: 3ab6886ccdd23fdd623fc470b53a156b!@#$%^&*
+  privateSalt: '{cipher}4857a8f4f7014fb04328b137713f2810a083fdce4656342684d30dee7ec2787b50eb89fa947d5dca6954f1b3790a6d312c5fb4d1df31786ba835f9cfae7e359d'
+  publicSalt: '{cipher}6eccd6346030520df83260b3a00c7a2255132f3315f2a444197536a4b0e6bb140db523c348c47bedcf2a8c73e4ed91a2bcb6779d50989d0cf81e8a184a39bcce'
+  jwtSecretKey: '{cipher}27352a882fd94ebef822ced41716567d9e3aa38856391b543d9f814e604becb9'
   jwtExpiration: 3600 # 60分钟
 
 ## Druid
