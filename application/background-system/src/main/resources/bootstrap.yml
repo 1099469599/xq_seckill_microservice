@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: application-background-system
+  cloud:
+    config:
+      profile: dev
+      label: master
+      name: platform
+      password: p1atf0rmds*lovexq.NET
+      discovery:
+        enabled: true
+        service-id: platform-config
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:9001/eureka/
