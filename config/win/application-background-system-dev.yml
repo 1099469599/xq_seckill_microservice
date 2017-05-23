@@ -1,3 +1,25 @@
+## APPLICATION CUSTOM CONFIG
+app:
+  ## Relational Databases
+  dataSource:
+    master:
+      name: master
+      driverClass: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:33006/db_seckill_microservice?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
+      username: seckill_app
+      password: secki1105@mysql.COM
+    slaves:
+      slave1:
+        name: slave1
+        driverClass: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:33006/db_seckill_microservice?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
+        username: seckill_app
+        password: secki1105@mysql.COM
+  privateSalt: 29bf9a9a$2dcc$11e7$a638$0090f5f26733
+  publicSalt: 29bf9a9a&2dcc&11e7&a638&0090f5f26733
+  jwtSecretKey: 3ab6886ccdd23fdd623fc470b53a156b!@#$%^&*
+  jwtExpiration: 3600 # 60分钟
+
 ## Druid
 druid:
   initialSize: 4

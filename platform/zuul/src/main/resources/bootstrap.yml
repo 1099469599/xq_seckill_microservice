@@ -5,8 +5,8 @@ spring:
     config:
       profile: dev
       label: master
-      name: platform
-      password: p1atf0rmds*lovexq.NET
+      username: config
+      password: c0nfigds*lovexq.NET
       discovery:
         enabled: true
         service-id: platform-config

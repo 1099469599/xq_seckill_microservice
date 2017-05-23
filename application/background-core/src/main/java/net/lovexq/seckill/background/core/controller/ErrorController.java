@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,13 +50,15 @@ public class ErrorController extends BasicErrorController {
     /**
      * 覆盖默认的HTML响应
      */
-    /*@Override
+    @Override
     public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> model = getErrorAttributes(request, isIncludeStackTrace(request, MediaType.TEXT_HTML));
         LOGGER.error("捕获的Html异常信息为：{}", model);
         response.setStatus(getStatus(request).value());
 
-        //根据状态码指定自定义的视图
+        ModelAndView modelAndView = this.resolveErrorView(request, response, getStatus(request), model);
+        return modelAndView == null?new ModelAndView("error", model):modelAndView;
+        /*//根据状态码指定自定义的视图
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         switch (statusCode) {
             case 404:
@@ -63,6 +67,6 @@ public class ErrorController extends BasicErrorController {
                 return new ModelAndView("/error/500", model);
             default:
                 return new ModelAndView("/error/error", model);
-        }
-    }*/
+        }*/
+    }
 }
