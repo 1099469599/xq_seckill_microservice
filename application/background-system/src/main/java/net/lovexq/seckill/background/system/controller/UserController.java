@@ -7,8 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +23,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/user")
-@RefreshScope
 public class UserController extends BasicController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-
-    @Value("${app.privateSalt}")
-    private String value;
 
     @Autowired
     private UserService userService;
@@ -86,7 +80,6 @@ public class UserController extends BasicController {
 
     @GetMapping("/salt")
     public JsonResult salt() {
-        System.out.println(value);
         return userService.getPublicSalt();
     }
 }
