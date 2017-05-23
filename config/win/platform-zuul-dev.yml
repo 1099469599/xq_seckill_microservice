@@ -3,8 +3,5 @@ spring:
     name: platform-zuul
 
 eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:9001/eureka/
   instance:
     prefer-ip-address: true

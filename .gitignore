@@ -1,6 +1,7 @@
 target/
 application/foreground/produce
 application/foreground/resources/3rd-party
+platform/config/src/main/resources/application.yml
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
