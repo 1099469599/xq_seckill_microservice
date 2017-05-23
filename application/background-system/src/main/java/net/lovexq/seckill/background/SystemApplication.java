@@ -8,7 +8,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
@@ -27,7 +26,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ServletComponentScan
 @Import({DynamicDataSourceRegister.class}) // 注册动态多数据源
 @EnableJpaRepositories(repositoryBaseClass = BasicRepositoryImpl.class) // 启用Jpa基类
-@RefreshScope
 public class SystemApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
