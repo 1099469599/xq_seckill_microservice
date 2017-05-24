@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @time 2017-05-01 09:41
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController extends BasicController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);

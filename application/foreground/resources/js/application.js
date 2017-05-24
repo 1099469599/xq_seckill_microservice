@@ -474,12 +474,12 @@ var Special = (function () {
 var SysUser = (function () {
 
     var saltUrl = function () {
-        return "/application-background-system/user/salt";
+        return "/application-background-system/users/salt";
     };
 
     var Register = {
         signupUrl: function () {
-            return "/application-background-system/user/signup";
+            return "/application-background-system/users/signup";
         },
         init: function () {
             $('#frmSignUp').validate({
@@ -527,7 +527,7 @@ var SysUser = (function () {
                 $.post(Register.signupUrl(), data).done(function (result) {
                     if (200 == result.status) {
                         Common.PNotice.success(result.message);
-                        window.location.href = "/application-background-system/user/login";
+                        window.location.href = "/application-background-system/users/login";
                     } else {
                         Common.PNotice.error(result.message);
                     }
@@ -540,7 +540,7 @@ var SysUser = (function () {
 
     var Login = {
         signinUrl: function () {
-            return "/application-background-system/user/signin";
+            return "/application-background-system/users/signin";
         },
         init: function () {
             $('#frmSignIn').validate({
@@ -595,7 +595,7 @@ var SysUser = (function () {
 
     var Logout = {
         signoutUrl: function () {
-            return "/application-background-system/user/signout";
+            return "/application-background-system/users/signout";
         },
         signout: function () {
             // 执行登出操作

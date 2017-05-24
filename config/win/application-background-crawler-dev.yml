@@ -1,0 +1,76 @@
+## APPLICATION CUSTOM CONFIG
+app:
+  ## Relational Databases
+  dataSource:
+    master:
+      name: master
+      driverClass: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:33006/db_seckill_microservice?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
+      username: seckill_app
+      password: '{cipher}92a29dca9aee91d3f468a01079fc6f6f0290cab4dc780a340e2e941d101abf02b6c0435a986d2d773db59ecd0a0e2e44'
+    slaves:
+      slave1:
+        name: slave1
+        driverClass: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:33006/db_seckill_microservice?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
+        username: seckill_app
+        password: '{cipher}92a29dca9aee91d3f468a01079fc6f6f0290cab4dc780a340e2e941d101abf02b6c0435a986d2d773db59ecd0a0e2e44'
+
+  privateSalt: 29bf9a9a$2dcc$11e7$a638$0090f5f26733
+  publicSalt: 29bf9a9a&2dcc&11e7&a638&0090f5f26733
+  jwtSecretKey: 3ab6886ccdd23fdd623fc470b53a156b!@#$%^&*
+  jwtExpiration: 3600 # 60分钟
+  producesPath: D:/Development/WorkSpaces/2017/xq_seckill_monolithic/seckill_foreground/produce/
+
+## Druid
+druid:
+  initialSize: 4
+  minIdle: 4
+  maxActive: 32
+  validationQuery: "SELECT 1 FROM DUAL"
+  removeAbandoned: true
+  removeAbandonedTimeout: 1800
+  logAbandoned: 1800
+
+feign:
+  compression:
+    request:
+      enabled : true
+      mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript
+      min-request-size: 1024
+    response:
+      enabled : true
+
+## EMBEDDED SERVER CONFIGURATION (ServerProperties)
+server:
+  compression:
+    enabled: true
+    mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript
+    min-response-size: 1024
+  session-timeout: 3600
+  tomcat:
+    uri-encoding: UTF-8
+
+## SPRING CONFIGURATION
+spring:
+  ## devtools
+  devtools:
+    restart:
+      enabled: true
+  ## REDIS (RedisProperties)
+  redis:
+    host: 192.168.31.148
+    port: 6379
+    database: 0
+    pool:
+      minIdle: 4
+      maxIdle: 32
+      maxActive: 64
+      maxWait: 60000
+    timeout: 10000
+  ## RABBITMQ (RabbitMQProperties)
+  rabbitmq:
+    host: 192.168.31.148
+    port: 5673
+    username: guest
+    password: guest

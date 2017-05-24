@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: application-background-crawler
+  cloud:
+    config:
+      profile: dev
+      label: master
+      username: config
+      password: c0nfigds*lovexq.NET
+      discovery:
+        enabled: true
+        service-id: platform-config
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@127.0.0.1:9001/eureka/
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.application.name}@${spring.cloud.client.ipAddress}:${server.port}
