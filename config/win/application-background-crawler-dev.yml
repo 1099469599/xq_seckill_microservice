@@ -69,9 +69,7 @@ spring:
     timeout: 10000
   ## RABBITMQ (RabbitMQProperties)
   rabbitmq:
-    #host: 192.168.31.148
-    #port: 5673
-    host: 192.168.9.110
-    port: 5672
+    host: 192.168.31.148
+    port: 5673
     username: guest
     password: guest
