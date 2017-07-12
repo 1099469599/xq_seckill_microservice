@@ -2,8 +2,8 @@ package net.lovexq.seckill.background.crawler.support.lianjia;
 
 import com.alibaba.fastjson.JSON;
 import net.lovexq.seckill.common.utils.IdWorker;
-import net.lovexq.seckill.domain.estate.dto.EstateItemDTO;
-import net.lovexq.seckill.domain.estate.model.EstateImageModel;
+import net.lovexq.seckill.background.domain.estate.dto.EstateItemDTO;
+import net.lovexq.seckill.background.domain.estate.model.EstateImageModel;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;

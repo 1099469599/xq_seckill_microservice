@@ -13,10 +13,10 @@ import net.lovexq.seckill.common.model.JsonResult;
 import net.lovexq.seckill.common.utils.BeanMapUtil;
 import net.lovexq.seckill.common.utils.ProtoStuffUtil;
 import net.lovexq.seckill.common.utils.enums.CrawlerRecordEnum;
-import net.lovexq.seckill.domain.crawler.model.CrawlerRecordModel;
-import net.lovexq.seckill.domain.estate.dto.EstateItemDTO;
-import net.lovexq.seckill.domain.estate.model.EstateImageModel;
-import net.lovexq.seckill.domain.estate.model.EstateItemModel;
+import net.lovexq.seckill.background.domain.crawler.model.CrawlerRecordModel;
+import net.lovexq.seckill.background.domain.estate.dto.EstateItemDTO;
+import net.lovexq.seckill.background.domain.estate.model.EstateImageModel;
+import net.lovexq.seckill.background.domain.estate.model.EstateItemModel;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -106,7 +106,6 @@ public class CrawlerServiceImpl implements CrawlerService {
                 if (CrawlerRecordEnum.DEFAULT.getValue().equals(state)) {
                     crawlerRecord.setState(CrawlerRecordEnum.DELETE.getValue());
                     crawlerRecordRepository.save(crawlerRecord);
-                    //estateItemRepository.updateState(crawlerRecord.getHistoryCode());
                     estateFeignClient.updateItemState(crawlerRecord.getHistoryCode());
                     // 新增操作
                 } else {
@@ -141,12 +140,10 @@ public class CrawlerServiceImpl implements CrawlerService {
         try {
             EstateItemDTO dto = ProtoStuffUtil.deserialize(dataArray, EstateItemDTO.class);
             // 先查看数据库是否已存在该记录
-            //EstateItemModel model = estateItemRepository.findByHouseCode(dto.getHouseCode());
             EstateItemModel model = estateFeignClient.findItemByHouseCode(dto.getHouseCode());
             if (model != null) {
                 BeanUtils.copyProperties(dto, model, "id");
                 // 先删除原有图片
-                //estateImageRepository.deleteByHouseCode(dto.getHouseCode());
                 estateFeignClient.deleteImagesByHouseCode(dto.getHouseCode());
             } else {
                 model = new EstateItemModel();
@@ -154,7 +151,6 @@ public class CrawlerServiceImpl implements CrawlerService {
 
             }
             // 保存房源条目
-            //estateItemRepository.save(model);
             estateFeignClient.saveItem(model);
             // 保存房源图片
             saveImages(dto);
@@ -178,7 +174,6 @@ public class CrawlerServiceImpl implements CrawlerService {
             for (EstateImageModel image : imageList) {
                 // 普通图片
                 if (image.getPictureId() != null) {
-                    //estateImageRepository.save(image);
                     estateFeignClient.saveImage(image);
                     // 户型图
                 } else {
@@ -188,7 +183,6 @@ public class CrawlerServiceImpl implements CrawlerService {
                     if (StringUtils.isBlank(image.getPictureSourceUrl())) {
                         image.setPictureSourceUrl(image.getUrl());
                     }
-                    //estateImageRepository.save(image);
                     estateFeignClient.saveImage(image);
                 }
             }

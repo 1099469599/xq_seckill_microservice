@@ -1,7 +1,7 @@
 package net.lovexq.seckill.background.crawler.repository;
 
 import net.lovexq.seckill.background.core.repository.BasicRepository;
-import net.lovexq.seckill.domain.crawler.model.CrawlerRecordModel;
+import net.lovexq.seckill.background.domain.crawler.model.CrawlerRecordModel;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 

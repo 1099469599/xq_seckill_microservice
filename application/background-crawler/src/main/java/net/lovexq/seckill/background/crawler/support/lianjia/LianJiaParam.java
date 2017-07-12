@@ -1,7 +1,7 @@
 package net.lovexq.seckill.background.crawler.support.lianjia;
 
 import net.lovexq.seckill.background.core.properties.AppProperties;
-import net.lovexq.seckill.domain.estate.dto.EstateItemDTO;
+import net.lovexq.seckill.background.domain.estate.dto.EstateItemDTO;
 
 import java.util.ArrayList;
 import java.util.List;

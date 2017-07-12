@@ -15,7 +15,10 @@ public class MqProducer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MqProducer.class);
 
+    @Autowired
     private final AmqpAdmin amqpAdmin;
+
+    @Autowired
     private final AmqpTemplate amqpTemplate;
 
     @Autowired

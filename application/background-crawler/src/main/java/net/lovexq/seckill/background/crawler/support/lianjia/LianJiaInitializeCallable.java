@@ -4,7 +4,7 @@ import net.lovexq.seckill.background.crawler.support.rabbimq.MqProducer;
 import net.lovexq.seckill.common.model.JsonResult;
 import net.lovexq.seckill.common.utils.ProtoStuffUtil;
 import net.lovexq.seckill.common.utils.constants.AppConstants;
-import net.lovexq.seckill.domain.estate.dto.EstateItemDTO;
+import net.lovexq.seckill.background.domain.estate.dto.EstateItemDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
