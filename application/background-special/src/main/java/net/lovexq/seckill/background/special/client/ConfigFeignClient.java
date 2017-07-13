@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author LuPindong
  * @time 2017-05-24 09:25
  */
-@FeignClient(name = "application-background-system", fallbackFactory = EstateFeignClientFallbackFactory.class)
+@FeignClient(name = "application-background-system", fallbackFactory = ConfigFeignClientFallbackFactory.class)
 public interface ConfigFeignClient {
 
     @RequestMapping(value = "/configs", method = RequestMethod.POST)
