@@ -89,7 +89,7 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EstateImageModel> listByHouseCode(String houseCode) {
+    public List<EstateImageModel> listImageByHouseCode(String houseCode) {
         EstateImageModel estateImage = new EstateImageModel(null, houseCode);
         Sort sort = new Sort(Sort.Direction.ASC, "pictureType");
         return estateImageRepository.findAll(Example.of(estateImage), sort);
@@ -97,8 +97,8 @@ public class EstateServiceImpl implements EstateService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String targetCode, String saleState) {
-        return estateItemRepository.findTop20ByHouseCodeLikeAndSaleState(targetCode, saleState);
+    public List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String houseCode, String saleState) {
+        return estateItemRepository.findTop20ByHouseCodeLikeAndSaleState(houseCode, saleState);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class EstateServiceImpl implements EstateService {
         for (EstateItemModel model : modelList) {
             EstateItemDTO dto = new EstateItemDTO();
             CachedBeanCopier.copy(model, dto);
-            List<EstateImageModel> imageModelList = listByHouseCode(dto.getHouseCode());
+            List<EstateImageModel> imageModelList = listImageByHouseCode(dto.getHouseCode());
             dto.setEstateImageList(imageModelList);
             dtoList.add(dto);
         }

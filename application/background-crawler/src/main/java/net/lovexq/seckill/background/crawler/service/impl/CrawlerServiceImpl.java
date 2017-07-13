@@ -1,6 +1,7 @@
 package net.lovexq.seckill.background.crawler.service.impl;
 
 import net.lovexq.seckill.background.core.properties.AppProperties;
+import net.lovexq.seckill.background.core.support.ThymeleafUtil;
 import net.lovexq.seckill.background.crawler.client.EstateFeignClient;
 import net.lovexq.seckill.background.crawler.repository.CrawlerRecordRepository;
 import net.lovexq.seckill.background.crawler.service.CrawlerService;
@@ -13,11 +14,9 @@ import net.lovexq.seckill.background.domain.estate.model.EstateItemModel;
 import net.lovexq.seckill.common.model.JsonResult;
 import net.lovexq.seckill.common.utils.BeanMapUtil;
 import net.lovexq.seckill.common.utils.ProtoStuffUtil;
-import net.lovexq.seckill.common.utils.constants.AppConstants;
 import net.lovexq.seckill.common.utils.enums.CrawlerRecordEnum;
 import net.lovexq.seckill.common.utils.enums.EstateEnum;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +24,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -157,7 +153,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             saveImages(dto);
 
             // 生成静态页面
-            generateStaticPage(BeanMapUtil.beanToMap(dto), "estate_detailUI");
+            ThymeleafUtil.generateStaticPage(BeanMapUtil.beanToMap(dto), "estate_detailUI", appProperties);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -175,7 +171,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             for (EstateImageModel image : imageList) {
                 // 普通图片
                 if (image.getPictureId() != null) {
-                    estateFeignClient.saveImage(ProtoStuffUtil.serialize(image));
+                    estateFeignClient.saveImage(image.getHouseCode(), ProtoStuffUtil.serialize(image));
                     // 户型图
                 } else {
                     image.setPictureId(System.currentTimeMillis());
@@ -184,7 +180,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                     if (StringUtils.isBlank(image.getPictureSourceUrl())) {
                         image.setPictureSourceUrl(image.getUrl());
                     }
-                    estateFeignClient.saveImage(ProtoStuffUtil.serialize(image));
+                    estateFeignClient.saveImage(image.getHouseCode(), ProtoStuffUtil.serialize(image));
                 }
             }
         }
@@ -215,41 +211,11 @@ public class CrawlerServiceImpl implements CrawlerService {
     }
 
     @Override
-    public void generateStaticPage(Map dataMap, String templateName) throws Exception {
-        //构造上下文(Model)
-        Context context = new Context(Locale.CHINA, dataMap);
-
-        //构造模板引擎
-        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setCacheable(true);
-        resolver.setCharacterEncoding(AppConstants.CHARSET_UTF8);
-        resolver.setTemplateMode("LEGACYHTML5");
-        resolver.setPrefix("templates/");//模板所在目录，相对于当前classloader的classpath。
-        resolver.setSuffix(".html");//模板文件后缀
-
-        TemplateEngine templateEngine = new TemplateEngine();
-        templateEngine.setTemplateResolver(resolver);
-
-        //渲染模板
-        Assert.notNull(templateName, "templateName must not be null!");
-        String filePath = appProperties.getProducesPath() + templateName.split("_")[0] + "/";
-        File file = new File(filePath);
-        if (!file.exists()) file.mkdirs();
-
-        String houseCode = MapUtils.getString(dataMap, "houseCode");
-        Assert.notNull(houseCode, "HouseCode must not be null!");
-
-
-        FileWriter write = new FileWriter(filePath + houseCode + ".shtml");
-        templateEngine.process(templateName, context, write);
-    }
-
-    @Override
     public JsonResult invokeFullUpdate() {
         JsonResult result = new JsonResult();
         ExecutorService exec = Executors.newCachedThreadPool();
         try {
-            result = exec.submit(new LianJiaFullCallable(estateFeignClient, this)).get();
+            result = exec.submit(new LianJiaFullCallable(estateFeignClient, appProperties)).get();
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             result = new JsonResult(500, e.getMessage());

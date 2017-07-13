@@ -1,7 +1,8 @@
 package net.lovexq.seckill.background.crawler.support.lianjia;
 
+import net.lovexq.seckill.background.core.properties.AppProperties;
+import net.lovexq.seckill.background.core.support.ThymeleafUtil;
 import net.lovexq.seckill.background.crawler.client.EstateFeignClient;
-import net.lovexq.seckill.background.crawler.service.CrawlerService;
 import net.lovexq.seckill.background.domain.estate.dto.EstateItemDTO;
 import net.lovexq.seckill.common.model.JsonResult;
 import net.lovexq.seckill.common.utils.BeanMapUtil;
@@ -24,11 +25,11 @@ public class LianJiaFullCallable implements Callable<JsonResult> {
 
     private EstateFeignClient estateFeignClient;
 
-    private CrawlerService crawlerService;
+    private AppProperties appProperties;
 
-    public LianJiaFullCallable(EstateFeignClient estateFeignClient, CrawlerService crawlerService) {
+    public LianJiaFullCallable(EstateFeignClient estateFeignClient, AppProperties appProperties) {
         this.estateFeignClient = estateFeignClient;
-        this.crawlerService = crawlerService;
+        this.appProperties = appProperties;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class LianJiaFullCallable implements Callable<JsonResult> {
                 List<EstateItemDTO> estateItemList = ProtoStuffUtil.deserializeList(dataArray, EstateItemDTO.class);
                 for (EstateItemDTO dto : estateItemList) {
                     // 生成静态页面
-                    crawlerService.generateStaticPage(BeanMapUtil.beanToMap(dto), "estate_detailUI");
+                    ThymeleafUtil.generateStaticPage(BeanMapUtil.beanToMap(dto), "estate_detailUI", appProperties);
                 }
                 dataArray = estateFeignClient.listAllByPage(++index);
             }

@@ -1,4 +1,4 @@
-package net.lovexq.seckill.background.crawler.client;
+package net.lovexq.seckill.background.special.client;
 
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
@@ -25,29 +25,18 @@ public class EstateFeignClientFallbackFactory implements FallbackFactory<EstateF
             }
 
             @Override
-            public byte[] findItemByHouseCode(@PathVariable("houseCode") String houseCode) {
+            public byte[] listByHouseCode(String houseCode) {
                 LOGGER.error("Fallback, Reason Was: {}", throwable);
                 return null;
             }
 
             @Override
-            public void saveImage(String houseCode, @RequestBody byte[] estateImageData) {
+            public void saveImage(@PathVariable("houseCode") String houseCode, @RequestBody byte[] estateImageData) {
                 LOGGER.error("Fallback, Reason Was: {}", throwable);
             }
 
             @Override
-            public Long deleteImagesByHouseCode(@PathVariable("houseCode") String houseCode) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
-                return null;
-            }
-
-            @Override
-            public void updateItemState(@PathVariable("houseCode") String houseCode, @PathVariable("state") String state) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
-            }
-
-            @Override
-            public byte[] listAllByPage(@PathVariable("page") int page) {
+            public byte[] findTop20ByHouseCodeLikeAndSaleState(String targetCode, String value) {
                 LOGGER.error("Fallback, Reason Was: {}", throwable);
                 return null;
             }

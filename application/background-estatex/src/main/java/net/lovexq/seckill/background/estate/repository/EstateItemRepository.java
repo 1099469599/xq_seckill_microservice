@@ -18,7 +18,7 @@ public interface EstateItemRepository extends BasicRepository<EstateItemModel, L
 
     EstateItemModel findByHouseCode(String houseCode);
 
-    List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String targetCode, String saleState);
+    List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String houseCode, String saleState);
 
     @Modifying
     @Query(UPDATESTATE_SQL)

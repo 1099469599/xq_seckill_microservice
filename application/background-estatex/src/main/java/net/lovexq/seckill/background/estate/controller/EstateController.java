@@ -38,6 +38,12 @@ public class EstateController extends BasicController {
         return result;
     }
 
+    @PostMapping("/estates")
+    public void saveItem(@RequestBody byte[] estateItemData) {
+        EstateItemModel estateItemModel = ProtoStuffUtil.deserialize(estateItemData, EstateItemModel.class);
+        estateService.save(estateItemModel);
+    }
+
     @GetMapping("/estates/{houseCode}")
     public byte[] findItemByHouseCode(@PathVariable("houseCode") String houseCode) {
         EstateItemModel estateItemModel = estateService.findItemByHouseCode(houseCode);
@@ -47,15 +53,19 @@ public class EstateController extends BasicController {
         return null;
     }
 
-    @PostMapping("/estates/{houseCode}/{state}")
-    public void updateItemState(@PathVariable("houseCode") String houseCode, @PathVariable("state") String state) {
-        estateService.updateItemState(houseCode, state);
+    @PostMapping("/estates/{houseCode}/images")
+    public void saveImage(@PathVariable("houseCode") String houseCode, @RequestBody byte[] estateImageData) {
+        EstateImageModel estateImageModel = ProtoStuffUtil.deserialize(estateImageData, EstateImageModel.class);
+        estateService.saveImage(estateImageModel);
     }
 
-    @PostMapping("/estates")
-    public EstateItemModel saveItem(@RequestBody byte[] estateItemData) {
-        EstateItemModel estateItemModel = ProtoStuffUtil.deserialize(estateItemData, EstateItemModel.class);
-        return estateService.save(estateItemModel);
+    @GetMapping(value = "/estates/{houseCode}/images")
+    public byte[] listByHouseCode(@PathVariable("houseCode") String houseCode) {
+        List<EstateImageModel> list = estateService.listImageByHouseCode(houseCode);
+        if (CollectionUtils.isNotEmpty(list)) {
+            return ProtoStuffUtil.serializeList(list);
+        }
+        return null;
     }
 
     @DeleteMapping("/estates/{houseCode}/images")
@@ -63,16 +73,24 @@ public class EstateController extends BasicController {
         return estateService.deleteImagesByHouseCode(houseCode);
     }
 
-    @PostMapping("/estates/images")
-    public EstateImageModel saveImage(@RequestBody byte[] estateImageData) {
-        EstateImageModel estateImageModel = ProtoStuffUtil.deserialize(estateImageData, EstateImageModel.class);
-        return estateService.saveImage(estateImageModel);
+    @PostMapping("/estates/{houseCode}/{state}")
+    public void updateItemState(@PathVariable("houseCode") String houseCode, @PathVariable("state") String state) {
+        estateService.updateItemState(houseCode, state);
     }
 
     @GetMapping("/estates/all/{page}")
     public byte[] listAllByPage(@PathVariable("page") int page) {
         pageable = new PageRequest(page - 1, 100);
         List<EstateItemDTO> list = estateService.listAllByPage(pageable);
+        if (CollectionUtils.isNotEmpty(list)) {
+            return ProtoStuffUtil.serializeList(list);
+        }
+        return null;
+    }
+
+    @GetMapping(value = "/estates/top20/{houseCode}/{state}")
+    public byte[] listByHouseCode(@PathVariable("houseCode") String houseCode, @PathVariable("state") String state) {
+        List<EstateItemModel> list = estateService.findTop20ByHouseCodeLikeAndSaleState(houseCode, state);
         if (CollectionUtils.isNotEmpty(list)) {
             return ProtoStuffUtil.serializeList(list);
         }

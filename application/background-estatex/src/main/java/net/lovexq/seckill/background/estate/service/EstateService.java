@@ -19,9 +19,9 @@ public interface EstateService {
 
     Page<EstateItemDTO> listForSaleByPage(Pageable pageable, Map<String, Object> paramMap) throws Exception;
 
-    List<EstateImageModel> listByHouseCode(String houseCode);
+    List<EstateImageModel> listImageByHouseCode(String houseCode);
 
-    List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String targetCode, String saleState);
+    List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String houseCode, String saleState);
 
     EstateItemModel save(EstateItemModel estateItem);
 

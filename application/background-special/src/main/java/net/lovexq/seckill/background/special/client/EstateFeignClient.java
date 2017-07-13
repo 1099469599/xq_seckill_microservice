@@ -1,4 +1,4 @@
-package net.lovexq.seckill.background.crawler.client;
+package net.lovexq.seckill.background.special.client;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,18 +16,12 @@ public interface EstateFeignClient {
     @RequestMapping(value = "/estates", method = RequestMethod.POST)
     void saveItem(@RequestBody byte[] estateItemData);
 
-    @RequestMapping(value = "/estates/{houseCode}", method = RequestMethod.GET)
-    byte[] findItemByHouseCode(@PathVariable("houseCode") String houseCode);
+    @RequestMapping(value = "/estates/{houseCode}/images", method = RequestMethod.GET)
+    byte[] listByHouseCode(@PathVariable("houseCode") String houseCode);
 
     @RequestMapping(value = "/estates/{houseCode}/images", method = RequestMethod.POST)
     void saveImage(@PathVariable("houseCode") String houseCode, @RequestBody byte[] estateImageData);
 
-    @RequestMapping(value = "/estates/{houseCode}/images", method = RequestMethod.DELETE)
-    Long deleteImagesByHouseCode(@PathVariable("houseCode") String houseCode);
-
-    @RequestMapping(value = "/estates/{houseCode}/{state}", method = RequestMethod.POST)
-    void updateItemState(@PathVariable("houseCode") String houseCode, @PathVariable("state") String state);
-
-    @RequestMapping(value = "/estates/all/{page}", method = RequestMethod.GET)
-    byte[] listAllByPage(@PathVariable("page") int page);
+    @RequestMapping(value = "/estates/top20/{houseCode}/{state}", method = RequestMethod.GET)
+    byte[] findTop20ByHouseCodeLikeAndSaleState(@PathVariable("houseCode") String houseCode, @PathVariable("state") String state);
 }

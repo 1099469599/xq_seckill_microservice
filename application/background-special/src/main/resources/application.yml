@@ -1,0 +1,20 @@
+server:
+  port: 10031
+
+## LOGGING
+logging:
+  path: D:/LOGFILE/xq_seckill_microservice
+  config: classpath:config/logback.xml
+  #OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL
+  level:
+    application : INFO
+    druid.sql: DEBUG
+    net.lovexq.seckill: INFO
+    org.apache.activemq: WARN
+    org.apache.http: WARN
+    org.hibernate: WARN
+    org.springframework: WARN
+    org.springframework.boot: INFO
+    org.springframework.cache: WARN
+    org.springframework.data: WARN
+    org.thymeleaf: WARN
