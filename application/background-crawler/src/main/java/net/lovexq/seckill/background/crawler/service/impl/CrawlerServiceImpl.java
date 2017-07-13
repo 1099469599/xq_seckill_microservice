@@ -4,19 +4,18 @@ import net.lovexq.seckill.background.core.properties.AppProperties;
 import net.lovexq.seckill.background.crawler.client.EstateFeignClient;
 import net.lovexq.seckill.background.crawler.repository.CrawlerRecordRepository;
 import net.lovexq.seckill.background.crawler.service.CrawlerService;
-import net.lovexq.seckill.background.crawler.support.lianjia.LianJiaAddCallable;
-import net.lovexq.seckill.background.crawler.support.lianjia.LianJiaCheckCallable;
-import net.lovexq.seckill.background.crawler.support.lianjia.LianJiaInitializeCallable;
-import net.lovexq.seckill.background.crawler.support.lianjia.LianJiaParam;
+import net.lovexq.seckill.background.crawler.support.lianjia.*;
 import net.lovexq.seckill.background.crawler.support.rabbimq.MqProducer;
-import net.lovexq.seckill.common.model.JsonResult;
-import net.lovexq.seckill.common.utils.BeanMapUtil;
-import net.lovexq.seckill.common.utils.ProtoStuffUtil;
-import net.lovexq.seckill.common.utils.enums.CrawlerRecordEnum;
 import net.lovexq.seckill.background.domain.crawler.model.CrawlerRecordModel;
 import net.lovexq.seckill.background.domain.estate.dto.EstateItemDTO;
 import net.lovexq.seckill.background.domain.estate.model.EstateImageModel;
 import net.lovexq.seckill.background.domain.estate.model.EstateItemModel;
+import net.lovexq.seckill.common.model.JsonResult;
+import net.lovexq.seckill.common.utils.BeanMapUtil;
+import net.lovexq.seckill.common.utils.ProtoStuffUtil;
+import net.lovexq.seckill.common.utils.constants.AppConstants;
+import net.lovexq.seckill.common.utils.enums.CrawlerRecordEnum;
+import net.lovexq.seckill.common.utils.enums.EstateEnum;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -101,12 +100,13 @@ public class CrawlerServiceImpl implements CrawlerService {
             // 处理下架和更新情况
             List<CrawlerRecordModel> crawlerRecordList = crawlerRecordRepository.findByBatchAndStateIn(batch, Arrays.asList(CrawlerRecordEnum.DEFAULT.getValue(), CrawlerRecordEnum.CREATE.getValue()));
             for (CrawlerRecordModel crawlerRecord : crawlerRecordList) {
+
                 String state = crawlerRecord.getState();
                 // 下架操作
                 if (CrawlerRecordEnum.DEFAULT.getValue().equals(state)) {
                     crawlerRecord.setState(CrawlerRecordEnum.DELETE.getValue());
                     crawlerRecordRepository.save(crawlerRecord);
-                    estateFeignClient.updateItemState(crawlerRecord.getHistoryCode());
+                    estateFeignClient.updateItemState(crawlerRecord.getHistoryCode(), EstateEnum.INVALID.getValue());
                     // 新增操作
                 } else {
                     EstateItemDTO estateItemDTO = ProtoStuffUtil.deserialize(crawlerRecord.getData(), EstateItemDTO.class);
@@ -139,8 +139,11 @@ public class CrawlerServiceImpl implements CrawlerService {
     public void saveInitializeData(byte[] dataArray) throws Exception {
         try {
             EstateItemDTO dto = ProtoStuffUtil.deserialize(dataArray, EstateItemDTO.class);
+
             // 先查看数据库是否已存在该记录
-            EstateItemModel model = estateFeignClient.findItemByHouseCode(dto.getHouseCode());
+            dataArray = estateFeignClient.findItemByHouseCode(dto.getHouseCode());
+            EstateItemModel model = ProtoStuffUtil.deserialize(dataArray, EstateItemModel.class);
+
             if (model != null) {
                 BeanUtils.copyProperties(dto, model, "id");
                 // 先删除原有图片
@@ -151,7 +154,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
             }
             // 保存房源条目
-            estateFeignClient.saveItem(model);
+            estateFeignClient.saveItem(ProtoStuffUtil.serialize(model));
             // 保存房源图片
             saveImages(dto);
 
@@ -174,7 +177,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             for (EstateImageModel image : imageList) {
                 // 普通图片
                 if (image.getPictureId() != null) {
-                    estateFeignClient.saveImage(image);
+                    estateFeignClient.saveImage(ProtoStuffUtil.serialize(image));
                     // 户型图
                 } else {
                     image.setPictureId(System.currentTimeMillis());
@@ -183,7 +186,7 @@ public class CrawlerServiceImpl implements CrawlerService {
                     if (StringUtils.isBlank(image.getPictureSourceUrl())) {
                         image.setPictureSourceUrl(image.getUrl());
                     }
-                    estateFeignClient.saveImage(image);
+                    estateFeignClient.saveImage(ProtoStuffUtil.serialize(image));
                 }
             }
         }
@@ -220,8 +223,12 @@ public class CrawlerServiceImpl implements CrawlerService {
 
         //构造模板引擎
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+        resolver.setCacheable(true);
+        resolver.setCharacterEncoding(AppConstants.CHARSET_UTF8);
+        resolver.setTemplateMode("LEGACYHTML5");
         resolver.setPrefix("templates/");//模板所在目录，相对于当前classloader的classpath。
         resolver.setSuffix(".html");//模板文件后缀
+
         TemplateEngine templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(resolver);
 
@@ -237,6 +244,22 @@ public class CrawlerServiceImpl implements CrawlerService {
 
         FileWriter write = new FileWriter(filePath + houseCode + ".shtml");
         templateEngine.process(templateName, context, write);
+    }
+
+    @Override
+    public JsonResult invokeFullUpdate() {
+        JsonResult result = new JsonResult();
+        ExecutorService exec = Executors.newCachedThreadPool();
+        try {
+            result = exec.submit(new LianJiaFullCallable(estateFeignClient, this)).get();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            result = new JsonResult(500, e.getMessage());
+        } finally {
+            exec.shutdown();
+        }
+
+        return result;
     }
 
 }

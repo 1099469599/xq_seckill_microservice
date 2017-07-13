@@ -148,12 +148,8 @@ var Common = (function () {
 // 房源信息
 var Estate = (function () {
     var List = {
-        uiUrl: function () {
-            return "/estate/listUI.html";
-        },
-
         dataUrl: function () {
-            return "/estates";
+            return "/application-background-estate/estates";
         },
 
         checkRequestParamObj: function (requestParamObj) {

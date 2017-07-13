@@ -24,4 +24,14 @@ public interface EstateService {
     List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String targetCode, String saleState);
 
     EstateItemModel save(EstateItemModel estateItem);
+
+    EstateItemModel findItemByHouseCode(String houseCode);
+
+    void updateItemState(String houseCode, String state);
+
+    Long deleteImagesByHouseCode(String houseCode);
+
+    EstateImageModel saveImage(EstateImageModel estateImageModel);
+
+    List<EstateItemDTO> listAllByPage(Pageable pageable);
 }

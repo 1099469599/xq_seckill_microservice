@@ -96,12 +96,53 @@ public class EstateServiceImpl implements EstateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EstateItemModel> findTop20ByHouseCodeLikeAndSaleState(String targetCode, String saleState) {
         return estateItemRepository.findTop20ByHouseCodeLikeAndSaleState(targetCode, saleState);
     }
 
     @Override
+    @Transactional
     public EstateItemModel save(EstateItemModel estateItem) {
         return estateItemRepository.save(estateItem);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public EstateItemModel findItemByHouseCode(String houseCode) {
+        return estateItemRepository.findByHouseCode(houseCode);
+    }
+
+    @Override
+    @Transactional
+    public void updateItemState(String houseCode, String state) {
+        estateItemRepository.updateState(houseCode, state, TimeUtil.nowDateTime());
+    }
+
+    @Override
+    @Transactional
+    public Long deleteImagesByHouseCode(String houseCode) {
+        return estateImageRepository.deleteByHouseCode(houseCode);
+    }
+
+    @Override
+    @Transactional
+    public EstateImageModel saveImage(EstateImageModel estateImageModel) {
+        return estateImageRepository.save(estateImageModel);
+    }
+
+    @Override
+    public List<EstateItemDTO> listAllByPage(Pageable pageable) {
+        List<EstateItemDTO> dtoList = new ArrayList<EstateItemDTO>();
+        Page<EstateItemModel> modelPage = estateItemRepository.findAll(pageable);
+        List<EstateItemModel> modelList = modelPage.getContent();
+        for (EstateItemModel model : modelList) {
+            EstateItemDTO dto = new EstateItemDTO();
+            CachedBeanCopier.copy(model, dto);
+            List<EstateImageModel> imageModelList = listByHouseCode(dto.getHouseCode());
+            dto.setEstateImageList(imageModelList);
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 }

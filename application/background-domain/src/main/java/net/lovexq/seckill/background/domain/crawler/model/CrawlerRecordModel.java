@@ -102,6 +102,8 @@ public class CrawlerRecordModel extends BasicModel implements Serializable {
         final StringBuilder sb = new StringBuilder("CrawlerRecordModel{");
         sb.append("id=").append(id);
         sb.append(", batch='").append(batch).append('\'');
+        sb.append(", historyCode='").append(historyCode).append('\'');
+        sb.append(", currentCode='").append(currentCode).append('\'');
         sb.append('}');
         return sb.toString();
     }

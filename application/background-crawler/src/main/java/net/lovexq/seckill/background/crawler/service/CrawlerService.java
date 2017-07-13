@@ -19,4 +19,6 @@ public interface CrawlerService {
     void saveCheckData(byte[] dataArray) throws Exception;
 
     void generateStaticPage(Map dataMap, String templateName) throws Exception;
+
+    JsonResult invokeFullUpdate();
 }

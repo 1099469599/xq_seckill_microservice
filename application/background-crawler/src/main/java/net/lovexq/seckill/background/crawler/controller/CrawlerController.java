@@ -1,8 +1,8 @@
 package net.lovexq.seckill.background.crawler.controller;
 
+import net.lovexq.seckill.background.core.controller.BasicController;
 import net.lovexq.seckill.background.crawler.service.CrawlerService;
 import net.lovexq.seckill.common.model.JsonResult;
-import net.lovexq.seckill.background.core.controller.BasicController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,4 +45,8 @@ public class CrawlerController extends BasicController {
         return result = crawlerService.invokeUpdate(batch, curPage);
     }
 
+    @PostMapping("/crawler/fullupdate")
+    public JsonResult invokeFullUpdate(HttpServletRequest request) throws Exception {
+        return result = crawlerService.invokeFullUpdate();
+    }
 }
