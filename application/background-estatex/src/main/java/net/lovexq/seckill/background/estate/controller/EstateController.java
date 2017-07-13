@@ -41,7 +41,10 @@ public class EstateController extends BasicController {
     @GetMapping("/estates/{houseCode}")
     public byte[] findItemByHouseCode(@PathVariable("houseCode") String houseCode) {
         EstateItemModel estateItemModel = estateService.findItemByHouseCode(houseCode);
-        return ProtoStuffUtil.serialize(estateItemModel);
+        if (estateItemModel != null) {
+            return ProtoStuffUtil.serialize(estateItemModel);
+        }
+        return null;
     }
 
     @PostMapping("/estates/{houseCode}/{state}")

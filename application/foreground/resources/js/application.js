@@ -585,6 +585,8 @@ var SysUser = (function () {
                 }).fail(function (result) {
                     Common.PNotice.error(result.message, result.data);
                 });
+            }).fail(function (result) {
+                Common.PNotice.error(result.message, result.data);
             });
         }
     };

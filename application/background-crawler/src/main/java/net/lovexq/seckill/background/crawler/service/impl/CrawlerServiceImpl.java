@@ -139,19 +139,17 @@ public class CrawlerServiceImpl implements CrawlerService {
     public void saveInitializeData(byte[] dataArray) throws Exception {
         try {
             EstateItemDTO dto = ProtoStuffUtil.deserialize(dataArray, EstateItemDTO.class);
+            EstateItemModel model = new EstateItemModel();
 
             // 先查看数据库是否已存在该记录
             dataArray = estateFeignClient.findItemByHouseCode(dto.getHouseCode());
-            EstateItemModel model = ProtoStuffUtil.deserialize(dataArray, EstateItemModel.class);
-
-            if (model != null) {
+            if (dataArray != null) {
+                model = ProtoStuffUtil.deserialize(dataArray, EstateItemModel.class);
                 BeanUtils.copyProperties(dto, model, "id");
                 // 先删除原有图片
                 estateFeignClient.deleteImagesByHouseCode(dto.getHouseCode());
             } else {
-                model = new EstateItemModel();
                 BeanUtils.copyProperties(dto, model);
-
             }
             // 保存房源条目
             estateFeignClient.saveItem(ProtoStuffUtil.serialize(model));

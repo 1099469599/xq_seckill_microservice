@@ -9,7 +9,7 @@
     <meta name="author" content="lovexq.net"/>
     <meta name="referrer" content="never"/>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
-    <title>[[${title}]] | lovexq.net</title>
+    <title>秒杀房源详情 | lovexq.net</title>
     <!--#include file="/common/fgHead.html"-->
 </head>
 <!-- END HEAD -->
@@ -26,7 +26,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>[[${title}]]<span>[[${regionAName}]] - [[${regionBName}]]</span></h1>
+                        <h1><span th:text="${title}"><span><span><span th:text="${regionAName}"><span> - <span th:text="${regionBName}"><span></span></h1>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                                 <tr>
                                     <td class="pt-md pb-md background-color-primary text-light" colspan="2">
                                         <sapn class="text-lg">
-                                            <del>原价[[${totalPrice}]]万</del>
+                                            <del>原价<span th:text="${totalPrice}"><span>万</del>
                                         </sapn>
                                         &nbsp;&nbsp;
                                         <sapn class="text-xl font-red" th:text="'秒杀价'+${#numbers.formatDecimal(totalPrice * 0.1, 1, 2)}+'万'">totalPrice</sapn>
@@ -98,39 +98,39 @@
                                 </tr>
                                 <tr>
                                     <td>房源编号</td>
-                                    <td>[[${houseCode}]]</td>
+                                    <td><span th:text="${houseCode}"><span></td>
                                 </tr>
                                 <tr>
                                     <td>小区名称</td>
-                                    <td>[[${resBlockName}]]&nbsp;&nbsp;<a href="#map" class="font-size-sm" data-hash="" data-hash-offset="100">(地图)</a></td>
+                                    <td><span th:text="${resBlockName}"><span>&nbsp;&nbsp;<a href="#map" class="font-size-sm" data-hash="" data-hash-offset="100">(地图)</a></td>
                                 </tr>
                                 <tr>
                                     <td>所在区域</td>
-                                    <td>[[${regionAName}]] - [[${regionBName}]]</td>
+                                    <td><span th:text="${regionAName}"><span> - <span th:text="${regionBName}"><span></td>
                                 </tr>
                                 <tr>
                                     <td>房屋户型</td>
-                                    <td>[[${model}]]</td>
+                                    <td><span th:text="${model}"><span></td>
                                 </tr>
                                 <tr>
                                     <td>房屋朝向</td>
-                                    <td>[[${direction}]]</td>
+                                    <td><span th:text="${direction}"><span></td>
                                 </tr>
                                 <tr>
                                     <td>建筑面积</td>
-                                    <td>[[${area}]]平米</td>
+                                    <td><span th:text="${area}"><span>平米</td>
                                 </tr>
                                 <tr>
                                     <td>所在楼层</td>
-                                    <td>[[${floor}]]</td>
+                                    <td><span th:text="${floor}"><span></td>
                                 </tr>
                                 <tr>
                                     <td>建筑年代</td>
-                                    <td>[[${buildingAge}?:'暂无数据']]年</td>
+                                    <td><span th:text="${buildingAge}?:'暂无数据'"><span>年</td>
                                 </tr>
                                 <tr>
                                     <td>装修情况</td>
-                                    <td>[[${decoration}]]</td>
+                                    <td><span th:text="${decoration}"><span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -337,9 +337,9 @@
         });
         // 详情页初始化
         Special.Detail.init({
-            id: "[[${id}]]",
-            startTimeX: [[${startTimeX}]],
-            endTimeX: [[${endTimeX}]]
+            id: "<span th:text="${id}"><span>",
+            startTimeX: <span th:text="${startTimeX}"><span>,
+            endTimeX: <span th:text="${endTimeX}"><span>
         });
     })
 </script>
