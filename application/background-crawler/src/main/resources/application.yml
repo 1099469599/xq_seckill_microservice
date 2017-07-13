@@ -11,6 +11,7 @@ logging:
   #OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL
   level:
     application : INFO
+    com.netflix: INFO
     druid.sql: DEBUG
     net.lovexq.seckill: INFO
     org.apache.activemq: WARN

@@ -41,12 +41,12 @@ public class SpecialController extends BasicController {
         return result;
     }
 
-    @GetMapping("/special/nowTime")
+    @GetMapping("/specials/nowTime")
     public JsonResult getNowTime() {
         return new JsonResult(Instant.now().toEpochMilli());
     }
 
-    @GetMapping("/special/captcha")
+    @GetMapping("/specials/captcha")
     public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Claims claims = (Claims) request.getAttribute(AppConstants.CLAIMS);
 
@@ -65,13 +65,13 @@ public class SpecialController extends BasicController {
     }
 
 
-    @GetMapping("/special/{id}/exposure")
+    @GetMapping("/specials/{id}/exposure")
     public JsonResult exposureSecKillUrl(HttpServletRequest request, @PathVariable("id") String id) throws Exception {
         Claims claims = (Claims) request.getAttribute(AppConstants.CLAIMS);
         return specialService.exposureSecKillUrl(Long.valueOf(id), claims);
     }
 
-    @PostMapping("/special/{id}/execution/{key}")
+    @PostMapping("/specials/{id}/execution/{key}")
     public JsonResult executeSecKill(HttpServletRequest request, @PathVariable("id") String id, @PathVariable("key") String key, @RequestParam("captcha") String captcha) throws Exception {
         Claims claims = (Claims) request.getAttribute(AppConstants.CLAIMS);
         result = specialService.executeSecKill(Long.valueOf(id), key, captcha, claims);

@@ -1,2 +1,12 @@
+spring:
+  profiles: node1
+
 server:
   port: 9021
+
+---
+spring:
+  profiles: node2
+
+server:
+  port: 9022

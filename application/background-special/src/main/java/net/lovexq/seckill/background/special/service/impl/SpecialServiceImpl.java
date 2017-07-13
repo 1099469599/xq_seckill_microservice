@@ -80,12 +80,13 @@ public class SpecialServiceImpl implements SpecialService {
             byteRedisClient.del(cacheKeyForList);
 
             // 更新特价批次
-            SystemConfigModel sysConfigModel = new SystemConfigModel();
+            SystemConfigModel sysConfigModel = null;
             dataArray = configFeignClient.findByConfigKey("special_batch");
             if (dataArray == null) {
                 sysConfigModel.setConfigKey("special_batch");
                 sysConfigModel.setConfigValue("0");
             } else {
+                sysConfigModel = new SystemConfigModel();
                 sysConfigModel = ProtoStuffUtil.deserialize(dataArray, SystemConfigModel.class);
             }
 
@@ -152,7 +153,7 @@ public class SpecialServiceImpl implements SpecialService {
                     SpecialStockDTO target = new SpecialStockDTO();
                     CachedBeanCopier.copy(source, target);
 
-                    target.setDetailHref("/special/" + target.getHouseCode() + ".shtml");
+                    target.setDetailHref("/specials/" + target.getHouseCode() + ".shtml");
                     target.setTotalPriceOriginal("<del>原价" + target.getTotalPrice() + "万</del>");
                     target.setTotalPriceCurrent("秒杀价" + BigDecimal.valueOf(0.1d).multiply(target.getTotalPrice()).setScale(2, BigDecimal.ROUND_HALF_DOWN) + "万");
                     target.setUnitPriceStr("单价" + target.getUnitPrice() + "万");

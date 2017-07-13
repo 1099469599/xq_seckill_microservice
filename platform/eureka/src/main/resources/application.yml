@@ -1,18 +1,6 @@
-server:
-  port: 9001
-
 spring:
   application:
     name: platform-eureka
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://platform:p1atf0rmds*lovexq.NET@127.0.0.1:9001/eureka/
-  instance:
-    preferIpAddress: true
-    instance-id: ${spring.application.name}@${spring.cloud.client.ipAddress}:${server.port}
-
 
 security:
   basic:
@@ -20,3 +8,29 @@ security:
   user:
     name: platform
     password: p1atf0rmds*lovexq.NET
+---
+spring:
+  profiles: node1
+
+server:
+  port: 9001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka2:9002/eureka
+  instance:
+    hostname: eureka1
+---
+spring:
+  profiles: node2
+
+server:
+  port: 9002
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:9001/eureka
+  instance:
+    hostname: eureka2

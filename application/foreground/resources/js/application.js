@@ -297,7 +297,7 @@ var Estate = (function () {
 var Special = (function () {
     var List = {
         dataUrl: function () {
-            return "/specials";
+            return "/application-background-special/specials";
         },
 
         init: function () {
@@ -315,19 +315,19 @@ var Special = (function () {
 
     var Detail = {
         nowTimeUrl: function () {
-            return "/special/nowTime";
+            return "/application-background-special/specials/nowTime";
         },
 
         exposureUrl: function (id) {
-            return '/special/' + id + '/exposure';
+            return '/application-background-special/specials/' + id + '/exposure';
         },
 
         executionUrl: function (id, key) {
-            return '/special/' + id + '/execution/' + key;
+            return '/application-background-special/specials/' + id + '/execution/' + key;
         },
 
         changeCaptcha: function () {
-            $('#captcha-image').attr('src', '/special/captcha?t=' + new Date().getTime());
+            $('#captcha-image').attr('src', '/application-background-special/specials/captcha?t=' + new Date().getTime());
         },
 
         init: function (params) {
@@ -578,7 +578,7 @@ var SysUser = (function () {
                 $.post(Login.signinUrl(), data).done(function (result) {
                     if (200 == result.status) {
                         Common.PNotice.success(result.message);
-                        window.location.href = "/special/listUI.html";
+                        window.location.href = "/specials/listUI.html";
                     } else {
                         Common.PNotice.error(result.message);
                     }

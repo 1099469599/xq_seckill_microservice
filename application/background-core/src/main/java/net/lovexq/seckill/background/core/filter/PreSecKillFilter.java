@@ -20,7 +20,7 @@ import java.io.IOException;
  * @time 2017-05-07 10:32
  */
 @Order(2)
-@WebFilter(filterName = "preSecKillFilter", urlPatterns = "/special/*")
+@WebFilter(filterName = "preSecKillFilter", urlPatterns = "/specials/*")
 public class PreSecKillFilter implements Filter {
 
     @Autowired
@@ -40,8 +40,8 @@ public class PreSecKillFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
-        if (uri.contains("/special/") && uri.contains("/execution/")) {
-            String id = (String) uri.subSequence("/special/".length(), uri.lastIndexOf("/execution/"));
+        if (uri.contains("/specials/") && uri.contains("/execution/")) {
+            String id = (String) uri.subSequence("/specials/".length(), uri.lastIndexOf("/execution/"));
 
             // 检查是否还要剩余库存，有的话就放行
             long stockCount = Long.parseLong(stringRedisClient.get(AppConstants.CACHE_SPECIAL_STOCK_COUNT + id));

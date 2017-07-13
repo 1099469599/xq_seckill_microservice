@@ -28,7 +28,7 @@ import java.util.Date;
  * @time 2017-05-07 10:32
  */
 @Order(1)
-@WebFilter(filterName = "authenticationFilter", urlPatterns = "/special/*")
+@WebFilter(filterName = "authenticationFilter", urlPatterns = "/specials/*")
 public class AuthenticationFilter implements Filter {
 
     @Autowired
@@ -47,7 +47,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
-        if (uri.contains("/special/")) {
+        if (uri.contains("/specials/")) {
 
             Cookie tokenCookie = CookieUtil.getCookieByName(request, AppConstants.ACCESS_TOKEN);
 

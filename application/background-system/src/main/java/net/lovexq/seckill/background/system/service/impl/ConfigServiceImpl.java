@@ -22,6 +22,11 @@ public class ConfigServiceImpl implements ConfigService {
     private ByteRedisClient byteRedisClient;
 
     @Override
+    public void save(SystemConfigModel model) {
+        systemConfigRepository.save(model);
+    }
+
+    @Override
     public SystemConfigModel getByConfigKey(String key) {
         String cacheKey = CacheKeyGenerator.generate(SystemConfigModel.class, "getByConfigKey", key);
 

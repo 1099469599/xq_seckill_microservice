@@ -8,5 +8,7 @@ import net.lovexq.seckill.background.system.model.SystemConfigModel;
  */
 public interface ConfigService {
 
+    void save(SystemConfigModel deserialize);
+
     SystemConfigModel getByConfigKey(String key);
 }
