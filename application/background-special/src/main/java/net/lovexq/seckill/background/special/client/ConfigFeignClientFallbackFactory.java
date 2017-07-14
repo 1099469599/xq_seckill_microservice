@@ -21,13 +21,12 @@ public class ConfigFeignClientFallbackFactory implements FallbackFactory<ConfigF
         return new ConfigFeignClient() {
             @Override
             public void save(@RequestBody byte[] configData) {
-
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "save",  throwable);
             }
 
             @Override
             public byte[] findByConfigKey(@PathVariable("key") String key) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "findByConfigKey",  throwable);
                 return null;
             }
         };

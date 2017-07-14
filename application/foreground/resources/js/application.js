@@ -578,7 +578,7 @@ var SysUser = (function () {
                 $.post(Login.signinUrl(), data).done(function (result) {
                     if (200 == result.status) {
                         Common.PNotice.success(result.message);
-                        window.location.href = "/specials/listUI.html";
+                        window.location.href = "/special/listUI.html";
                     } else {
                         Common.PNotice.error(result.message);
                     }

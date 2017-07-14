@@ -4,7 +4,8 @@ import io.jsonwebtoken.Claims;
 import net.lovexq.seckill.background.core.properties.AppProperties;
 import net.lovexq.seckill.background.core.repository.cache.ByteRedisClient;
 import net.lovexq.seckill.background.core.repository.cache.StringRedisClient;
-import net.lovexq.seckill.background.core.support.ThymeleafUtil;
+import net.lovexq.seckill.background.core.support.thymeleaf.GenParam;
+import net.lovexq.seckill.background.core.support.thymeleaf.PageGenerator;
 import net.lovexq.seckill.background.domain.estate.model.EstateImageModel;
 import net.lovexq.seckill.background.domain.estate.model.EstateItemModel;
 import net.lovexq.seckill.background.domain.special.dto.SpecialStockDTO;
@@ -16,6 +17,7 @@ import net.lovexq.seckill.background.special.client.EstateFeignClient;
 import net.lovexq.seckill.background.special.repository.SpecialOrderRepository;
 import net.lovexq.seckill.background.special.repository.SpecialStockRepository;
 import net.lovexq.seckill.background.special.service.SpecialService;
+import net.lovexq.seckill.common.exception.ApplicationException;
 import net.lovexq.seckill.common.model.JsonResult;
 import net.lovexq.seckill.common.utils.*;
 import net.lovexq.seckill.common.utils.constants.AppConstants;
@@ -29,6 +31,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -36,6 +41,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -72,6 +78,9 @@ public class SpecialServiceImpl implements SpecialService {
         LocalDateTime nowDateTime = TimeUtil.nowDateTime();
         String targetCode = "%" + nowDateTime.getMinute() + "%";
         byte[] dataArray = estateFeignClient.findTop20ByHouseCodeLikeAndSaleState(targetCode, EstateEnum.FOR_SALE.getValue());
+        if (dataArray == null) {
+            throw new ApplicationException("获取的房源为空!");
+        }
         List<EstateItemModel> estateItemModelList = ProtoStuffUtil.deserializeList(dataArray, EstateItemModel.class);
 
         if (CollectionUtils.isNotEmpty(estateItemModelList)) {
@@ -98,6 +107,14 @@ public class SpecialServiceImpl implements SpecialService {
 
             // 开始生成特价库存相关
             Random random = new Random();
+
+            ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+            resolver.setCacheable(true);
+            resolver.setCharacterEncoding(AppConstants.CHARSET_UTF8);
+            resolver.setTemplateMode(StandardTemplateModeHandlers.LEGACYHTML5.getTemplateModeName());
+            resolver.setPrefix("templates/");//模板所在目录
+            resolver.setSuffix(".html");//模板文件后缀
+
             for (EstateItemModel estateItem : estateItemModelList) {
                 // 插入特价库存表
                 SpecialStockModel specialStock = new SpecialStockModel(IdWorker.INSTANCE.nextId());
@@ -119,17 +136,21 @@ public class SpecialServiceImpl implements SpecialService {
                 estateItem.setSaleState(EstateEnum.SPECIAL.getValue());
                 estateFeignClient.saveItem(ProtoStuffUtil.serialize(estateItem));
 
-                // 生成静态页面
                 SpecialStockDTO specialStockDTO = new SpecialStockDTO();
                 CachedBeanCopier.copy(specialStock, specialStockDTO);
 
                 specialStockDTO.setStartTimeX(specialStockDTO.getStartTime().atZone(TimeUtil.shanghai).toInstant().toEpochMilli());
                 specialStockDTO.setEndTimeX(specialStockDTO.getEndTime().atZone(TimeUtil.shanghai).toInstant().toEpochMilli());
                 dataArray = estateFeignClient.listByHouseCode(estateItem.getHouseCode());
-                specialStockDTO.setEstateImageList(ProtoStuffUtil.deserializeList(dataArray, EstateImageModel.class));
+                if (dataArray != null) {
+                    specialStockDTO.setEstateImageList(ProtoStuffUtil.deserializeList(dataArray, EstateImageModel.class));
+                }
 
+                //构造上下文(Model)
+                Context context = new Context(Locale.CHINA, BeanMapUtil.beanToMap(specialStockDTO));
+                GenParam genParam = new GenParam(resolver, context, "special_detailUI", appProperties.getProducesPath(), specialStockDTO.getHouseCode());
                 // 生成静态页面
-                ThymeleafUtil.generateStaticPage(BeanMapUtil.beanToMap(specialStockDTO), "special_detailUI", appProperties);
+                PageGenerator.staticPage(genParam);
             }
 
         }
@@ -153,7 +174,7 @@ public class SpecialServiceImpl implements SpecialService {
                     SpecialStockDTO target = new SpecialStockDTO();
                     CachedBeanCopier.copy(source, target);
 
-                    target.setDetailHref("/specials/" + target.getHouseCode() + ".shtml");
+                    target.setDetailHref("/special/" + target.getHouseCode() + ".shtml");
                     target.setTotalPriceOriginal("<del>原价" + target.getTotalPrice() + "万</del>");
                     target.setTotalPriceCurrent("秒杀价" + BigDecimal.valueOf(0.1d).multiply(target.getTotalPrice()).setScale(2, BigDecimal.ROUND_HALF_DOWN) + "万");
                     target.setUnitPriceStr("单价" + target.getUnitPrice() + "万");
@@ -182,7 +203,10 @@ public class SpecialServiceImpl implements SpecialService {
             if (sourceStock != null) {
                 CachedBeanCopier.copy(sourceStock, targetStock);
                 byte[] dataArray = estateFeignClient.listByHouseCode(targetStock.getHouseCode());
-                targetStock.setEstateImageList(ProtoStuffUtil.deserializeList(dataArray, EstateImageModel.class));
+                if (dataArray != null) {
+                    targetStock.setEstateImageList(ProtoStuffUtil.deserializeList(dataArray, EstateImageModel.class));
+                }
+
                 byteRedisClient.setByteObj(cacheKey, targetStock, 60);
             }
             return targetStock;

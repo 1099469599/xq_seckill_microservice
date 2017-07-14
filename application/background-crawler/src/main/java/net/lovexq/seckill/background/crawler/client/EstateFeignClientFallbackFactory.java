@@ -21,34 +21,34 @@ public class EstateFeignClientFallbackFactory implements FallbackFactory<EstateF
         return new EstateFeignClient() {
             @Override
             public void saveItem(@RequestBody byte[] estateItemData) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "saveItem",  throwable);
             }
 
             @Override
             public byte[] findItemByHouseCode(@PathVariable("houseCode") String houseCode) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "findItemByHouseCode", throwable);
                 return null;
             }
 
             @Override
             public void saveImage(String houseCode, @RequestBody byte[] estateImageData) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "saveImage",  throwable);
             }
 
             @Override
             public Long deleteImagesByHouseCode(@PathVariable("houseCode") String houseCode) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "deleteImagesByHouseCode",  throwable);
                 return null;
             }
 
             @Override
             public void updateItemState(@PathVariable("houseCode") String houseCode, @PathVariable("state") String state) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "updateItemState",  throwable);
             }
 
             @Override
             public byte[] listAllByPage(@PathVariable("page") int page) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "listAllByPage",  throwable);
                 return null;
             }
         };

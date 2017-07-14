@@ -21,23 +21,23 @@ public class EstateFeignClientFallbackFactory implements FallbackFactory<EstateF
         return new EstateFeignClient() {
             @Override
             public void saveItem(@RequestBody byte[] estateItemData) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "saveItem",  throwable);
             }
 
             @Override
             public byte[] listByHouseCode(String houseCode) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "listByHouseCode",  throwable);
                 return null;
             }
 
             @Override
             public void saveImage(@PathVariable("houseCode") String houseCode, @RequestBody byte[] estateImageData) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "saveImage",  throwable);
             }
 
             @Override
             public byte[] findTop20ByHouseCodeLikeAndSaleState(String targetCode, String value) {
-                LOGGER.error("Fallback, Reason Was: {}", throwable);
+                LOGGER.error("{} Fallback, Reason Was: {}", "findTop20ByHouseCodeLikeAndSaleState",  throwable);
                 return null;
             }
         };

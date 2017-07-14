@@ -1,7 +1,8 @@
 package net.lovexq.seckill.background.crawler.service.impl;
 
 import net.lovexq.seckill.background.core.properties.AppProperties;
-import net.lovexq.seckill.background.core.support.ThymeleafUtil;
+import net.lovexq.seckill.background.core.support.thymeleaf.GenParam;
+import net.lovexq.seckill.background.core.support.thymeleaf.PageGenerator;
 import net.lovexq.seckill.background.crawler.client.EstateFeignClient;
 import net.lovexq.seckill.background.crawler.repository.CrawlerRecordRepository;
 import net.lovexq.seckill.background.crawler.service.CrawlerService;
@@ -14,6 +15,7 @@ import net.lovexq.seckill.background.domain.estate.model.EstateItemModel;
 import net.lovexq.seckill.common.model.JsonResult;
 import net.lovexq.seckill.common.utils.BeanMapUtil;
 import net.lovexq.seckill.common.utils.ProtoStuffUtil;
+import net.lovexq.seckill.common.utils.constants.AppConstants;
 import net.lovexq.seckill.common.utils.enums.CrawlerRecordEnum;
 import net.lovexq.seckill.common.utils.enums.EstateEnum;
 import org.apache.commons.collections.CollectionUtils;
@@ -24,11 +26,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.templatemode.StandardTemplateModeHandlers;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -152,8 +154,18 @@ public class CrawlerServiceImpl implements CrawlerService {
             // 保存房源图片
             saveImages(dto);
 
+            ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+            resolver.setCacheable(true);
+            resolver.setCharacterEncoding(AppConstants.CHARSET_UTF8);
+            resolver.setTemplateMode(StandardTemplateModeHandlers.LEGACYHTML5.getTemplateModeName());
+            resolver.setPrefix("templates/");//模板所在目录
+            resolver.setSuffix(".html");//模板文件后缀
+            //构造上下文(Model)
+
+            Context context = new Context(Locale.CHINA, BeanMapUtil.beanToMap(dto));
+            GenParam genParam = new GenParam(resolver, context, "estate_detailUI", appProperties.getProducesPath(), dto.getHouseCode());
             // 生成静态页面
-            ThymeleafUtil.generateStaticPage(BeanMapUtil.beanToMap(dto), "estate_detailUI", appProperties);
+            PageGenerator.staticPage(genParam);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }
