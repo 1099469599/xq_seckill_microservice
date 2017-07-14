@@ -330,10 +330,10 @@ var Special = (function () {
             $('#captcha-image').attr('src', '/application-background-special/specials/captcha?t=' + new Date().getTime());
         },
 
-        init: function (params) {
-            var id = params['id'];
-            var startTimeX = params['startTimeX'];
-            var endTimeX = params['endTimeX'];
+        init: function () {
+            var id = $("#id").val();
+            var startTimeX = parseInt(($("#startTimeX").val()));
+            var endTimeX = parseInt(($("#endTimeX").val()));
 
             // 获取系统当前时间
             $.get(Detail.nowTimeUrl()).done(function (result) {

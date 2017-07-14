@@ -155,7 +155,7 @@
                                             <div class="col-md-3">
                                                 <div class="captcha form-control" style="float: right">
                                                     <div class="captcha-image">
-                                                        <img id="captcha-image" alt="验证码" src="/specials/captcha" class="changeCaptcha"/>
+                                                        <img id="captcha-image" alt="验证码" src="/application-background-special//specials/captcha" class="changeCaptcha"/>
                                                     </div>
                                                     <div class="captcha-refresh">
                                                         <a href="javascript:void(0)" class="changeCaptcha"><i class="fa fa-refresh"></i></a>
@@ -339,11 +339,7 @@
             this.src = this.attributes["data-original"].value;
         });
         // 详情页初始化
-        Special.Detail.init({
-            id: $("#id").val(),
-            startTimeX: $("#startTimeX").val(),
-            endTimeX: $("#endTimeX").val()
-        });
+        Special.Detail.init();
     })
 </script>
 <!-- END PAGESCRIPT -->
