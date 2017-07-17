@@ -69,7 +69,7 @@ spring:
     timeout: 10000
   rabbitmq:
     host: 192.168.31.148
-    port: 5673
+    port: 5672
     username: guest
     password: guest
   ## THYMELEAF (ThymeleafAutoConfiguration)
