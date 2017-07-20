@@ -6,7 +6,7 @@ app:
 
 ## LOGGING
 logging:
-  path: D:/LOGFILE/xq_seckill_microservice
+  path: /home/net/lovexq/seckill/log/
   config: classpath:config/logback.xml
   #OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL
   level:
