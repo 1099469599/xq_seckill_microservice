@@ -1,21 +1,37 @@
-server:
-  port: 10031
-
 ## LOGGING
 logging:
   path: /home/net/lovexq/seckill/log/
   config: classpath:config/logback.xml
   #OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL
   level:
-    application : INFO
-    com.netflix: INFO
-    druid.sql: DEBUG
-    net.lovexq.seckill: INFO
+    application: WARN
+    com.netflix: WARN
+    druid.sql: WARN
+    net.lovexq.seckill: WARN
     org.apache.activemq: WARN
     org.apache.http: WARN
     org.hibernate: WARN
     org.springframework: WARN
-    org.springframework.boot: INFO
+    org.springframework.boot: WARN
     org.springframework.cache: WARN
     org.springframework.data: WARN
     org.thymeleaf: WARN
+
+---
+spring:
+  profiles: node1
+
+server:
+  port: 10031
+---
+spring:
+  profiles: node2
+
+server:
+  port: 10032
+---
+spring:
+  profiles: node3
+
+server:
+  port: 10033

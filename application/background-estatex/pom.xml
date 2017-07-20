@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>seckill-background-estate</artifactId>
+    <artifactId>seckill-estate</artifactId>
     <packaging>jar</packaging>
 
     <name>Application Background Estate</name>
@@ -28,12 +28,12 @@
         <!-- 本项目前置依赖 -->
         <dependency>
             <groupId>net.lovexq.seckill</groupId>
-            <artifactId>seckill-background-core</artifactId>
+            <artifactId>seckill-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.lovexq.seckill</groupId>
-            <artifactId>seckill-background-domain</artifactId>
+            <artifactId>seckill-domain</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
