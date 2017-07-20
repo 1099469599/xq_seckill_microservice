@@ -85,8 +85,8 @@ public class AuthenticationFilter implements Filter {
                         String token = JwtTokenUtil.generateToken(requestClaims, appProperties.getJwtExpiration(), appProperties.getJwtSecretKey());
 
                         // 更新Cookie
-                        CookieUtil.createCookie(AppConstants.ACCESS_TOKEN, token, ".lovexq.net", appProperties.getJwtExpiration(), true, response);
-                        CookieUtil.createCookie(AppConstants.USER_NAME, claimsUN, ".lovexq.net", appProperties.getJwtExpiration(), response);
+                        CookieUtil.createCookie(AppConstants.ACCESS_TOKEN, token, "lovexq.net", appProperties.getJwtExpiration(), true, response);
+                        CookieUtil.createCookie(AppConstants.USER_NAME, claimsUN, "lovexq.net", appProperties.getJwtExpiration(), response);
 
                         // 缓存Token
                         byteRedisClient.setByteObj(cacheKey, token, appProperties.getJwtExpiration());
