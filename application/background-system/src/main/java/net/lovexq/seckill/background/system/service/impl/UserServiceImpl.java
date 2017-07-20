@@ -89,8 +89,8 @@ public class UserServiceImpl implements UserService {
         result.setData(token);
 
         // 存入Cookie
-        CookieUtil.createCookie(AppConstants.ACCESS_TOKEN, token, "127.0.0.1", appProperties.getJwtExpiration(), true, response);
-        CookieUtil.createCookie(AppConstants.USER_NAME, userModel.getName(), "127.0.0.1", appProperties.getJwtExpiration(), response);
+        CookieUtil.createCookie(AppConstants.ACCESS_TOKEN, token, ".lovexq.net", appProperties.getJwtExpiration(), true, response);
+        CookieUtil.createCookie(AppConstants.USER_NAME, userModel.getName(), ".lovexq.net", appProperties.getJwtExpiration(), response);
 
         // 缓存Token
         String cacheKey = AppConstants.CACHE_ACCESS_TOKEN + account;
@@ -112,8 +112,8 @@ public class UserServiceImpl implements UserService {
         }
 
         // 清除Cookie
-        CookieUtil.removeCookie(AppConstants.ACCESS_TOKEN, "127.0.0.1", response);
-        CookieUtil.removeCookie(AppConstants.USER_NAME, "127.0.0.1", response);
+        CookieUtil.removeCookie(AppConstants.ACCESS_TOKEN, ".lovexq.net", response);
+        CookieUtil.removeCookie(AppConstants.USER_NAME, ".lovexq.net", response);
 
         return result;
     }
