@@ -46,16 +46,6 @@ feign:
     response:
       enabled : true
 
-## EMBEDDED SERVER CONFIGURATION (ServerProperties)
-server:
-  compression:
-    enabled: true
-    mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript
-    min-response-size: 1024
-  session-timeout: 3600
-  tomcat:
-    uri-encoding: UTF-8
-
 ## SPRING CONFIGURATION
 spring:
   ## devtools

@@ -14,6 +14,7 @@ public enum CaptchaGenerator {
 
     private static final int WIDTH = 160;
     private static final int HEIGHT = 68;
+    // FIXME 取消中文
     private final String[] cnNumber = {"〇", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖", "拾"};
     private String captcha; // 验证码
     private String expression; // 表达式

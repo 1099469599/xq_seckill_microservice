@@ -1,19 +1,10 @@
 spring:
   application:
     name: platform-zuul
-  cloud:
-    config:
-      profile: dev
-      label: master
-      username: config
-      password: c0nfigds*lovexq.NET
-      discovery:
-        enabled: true
-        service-id: platform-config
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka,
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka/
 zuul:
   sensitive-headers:
 ## LOGGING
@@ -22,14 +13,22 @@ logging:
   config: classpath:config/logback.xml
   #OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL
   level:
-    application: WARN
+    application: INFO
     com.netflix: WARN
     druid.sql: WARN
-    net.lovexq.seckill: WARN
+    net.lovexq.seckill: INFO
     org.apache.http: WARN
     org.hibernate: WARN
     org.springframework: WARN
     org.springframework.boot: WARN
-    org.springframework.cache: WARN
-    org.springframework.data: WARN
     org.thymeleaf: WARN
+
+## EMBEDDED SERVER CONFIGURATION (ServerProperties)
+server:
+  compression:
+    enabled: true
+    mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript
+    min-response-size: 1024
+  session-timeout: 3600
+  tomcat:
+    uri-encoding: UTF-8

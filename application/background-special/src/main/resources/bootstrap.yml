@@ -13,4 +13,4 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka,
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka/

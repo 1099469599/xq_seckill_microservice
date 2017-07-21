@@ -4,15 +4,22 @@ logging:
   config: classpath:config/logback.xml
   #OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL
   level:
-    application: WARN
+    application: INFO
     com.netflix: WARN
     druid.sql: WARN
-    net.lovexq.seckill: WARN
-    org.apache.activemq: WARN
+    net.lovexq.seckill: INFO
     org.apache.http: WARN
     org.hibernate: WARN
     org.springframework: WARN
     org.springframework.boot: WARN
-    org.springframework.cache: WARN
-    org.springframework.data: WARN
     org.thymeleaf: WARN
+
+## EMBEDDED SERVER CONFIGURATION (ServerProperties)
+server:
+  compression:
+    enabled: true
+    mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript
+    min-response-size: 1024
+  session-timeout: 3600
+  tomcat:
+    uri-encoding: UTF-8
