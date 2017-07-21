@@ -16,22 +16,3 @@ logging:
     org.springframework.cache: WARN
     org.springframework.data: WARN
     org.thymeleaf: WARN
-
----
-spring:
-  profiles: node1
-
-server:
-  port: 10031
----
-spring:
-  profiles: node2
-
-server:
-  port: 10032
----
-spring:
-  profiles: node3
-
-server:
-  port: 10033

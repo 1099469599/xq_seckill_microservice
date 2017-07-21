@@ -10,8 +10,7 @@ spring:
       discovery:
         enabled: true
         service-id: platform-config
-
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://platform:p1atf0rmds*lovexq.NET@192.168.31.148:9001/eureka,http://platform:p1atf0rmds*lovexq.NET@192.168.31.148:9002/eureka,
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka,
