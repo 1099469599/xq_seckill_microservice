@@ -26,7 +26,7 @@ public class DynamicDataSourceAspect {
     @Autowired
     private DynamicDataSourceHolder dynamicDataSourceHolder;
 
-    @Pointcut("execution(public * net.lovexq.seckill.kernel.service.*.*(..))")
+    @Pointcut("execution(public * net.lovexq.seckill.background.*.service.*.*(..))")
     public void dsPointcut() {
     }
 

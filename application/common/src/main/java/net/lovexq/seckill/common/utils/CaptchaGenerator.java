@@ -14,8 +14,7 @@ public enum CaptchaGenerator {
 
     private static final int WIDTH = 160;
     private static final int HEIGHT = 68;
-    // FIXME 取消中文
-    private final String[] cnNumber = {"〇", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖", "拾"};
+    private final String[] cnNumber = {"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
     private String captcha; // 验证码
     private String expression; // 表达式
 
@@ -32,7 +31,7 @@ public enum CaptchaGenerator {
         switch (random.nextInt(7)) {
             case 1:
                 this.setCaptcha(String.valueOf(y));
-                this.setExpression("? － " + cnNumber[x] + " = " + getResultStr(y - x));
+                this.setExpression("?  -  " + cnNumber[x] + " = " + getResultStr(y - x));
                 break;
             case 2:
                 this.setCaptcha(String.valueOf(y));
@@ -40,11 +39,11 @@ public enum CaptchaGenerator {
                 break;
             case 3:
                 this.setCaptcha(String.valueOf(x + y));
-                this.setExpression(cnNumber[x] + " ＋ " + getResultStr(y) + " = ?");
+                this.setExpression(cnNumber[x] + "  +  " + getResultStr(y) + " = ?");
                 break;
             case 4:
                 this.setCaptcha(String.valueOf(y - x));
-                this.setExpression(getResultStr(y) + " － " + cnNumber[x] + " = ?");
+                this.setExpression(getResultStr(y) + "  -  " + cnNumber[x] + " = ?");
                 break;
             case 5:
                 this.setCaptcha(String.valueOf(x * y));
@@ -56,11 +55,11 @@ public enum CaptchaGenerator {
                 break;
             default:
                 this.setCaptcha(String.valueOf(y));
-                this.setExpression(cnNumber[x] + " ＋ ? = " + getResultStr(x + y));
+                this.setExpression(cnNumber[x] + "  +  ? = " + getResultStr(x + y));
                 break;
         }
 
-        g.setFont(new Font("新宋体", Font.BOLD, 21));// 设定字体
+        g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));// 设定字体
         g.setColor(new Color(20 + random.nextInt(30), 20 + random.nextInt(120), 20 + random.nextInt(120)));
         randomPosition(g, random);
         g.dispose();// 图象生效
