@@ -42,8 +42,8 @@ public class SecKillScheduler {
     @Autowired
     private SpecialService specialService;
 
-    @Scheduled(cron = "0 20/40 * * * ?") // 每个整点的第20/40分钟执行一次检查
-    //@Scheduled(fixedDelay = 30000) //每30秒执行1次
+    //@Scheduled(cron = "0 20/40 * * * ?") // 每个整点的第20/40分钟执行一次检查
+    @Scheduled(fixedDelay = 30000) //每30秒执行1次
     public void startSpecialThread() throws Exception {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(">>>>>> " + threadPoolExecutor );

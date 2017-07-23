@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
         cipher = new String(Base64Utils.decodeFromString(cipher), AppConstants.CHARSET_UTF8);
 
         SystemUserModel userModel = systemUserRepository.findByAccount(account);
-        //FIXME 测试阶段暂时关闭，后续需要打开
+        //FIXME 测试需要，暂时屏蔽
         /*if (userModel == null || userModel.getId() == null) {
             userModel = systemUserRepository.findByEmail(account);
             if (userModel == null || userModel.getId() == null) {

@@ -89,13 +89,12 @@ public class SpecialServiceImpl implements SpecialService {
             byteRedisClient.del(cacheKeyForList);
 
             // 更新特价批次
-            SystemConfigModel sysConfigModel = null;
+            SystemConfigModel sysConfigModel = new SystemConfigModel();
             dataArray = configFeignClient.findByConfigKey("special_batch");
             if (dataArray == null) {
                 sysConfigModel.setConfigKey("special_batch");
                 sysConfigModel.setConfigValue("0");
             } else {
-                sysConfigModel = new SystemConfigModel();
                 sysConfigModel = ProtoStuffUtil.deserialize(dataArray, SystemConfigModel.class);
             }
 
@@ -218,7 +217,6 @@ public class SpecialServiceImpl implements SpecialService {
     public JsonResult exposureSecKillUrl(Long id, Claims claims) throws Exception {
         String account = claims.getAudience();
 
-
         SpecialStockDTO specialStock = getOne(id);
 
         LocalDateTime startTime = specialStock.getStartTime(); // 秒杀开始时间
@@ -260,15 +258,15 @@ public class SpecialServiceImpl implements SpecialService {
 
         String account = claims.getAudience();
 
-        // 先检查验证码
-        String cacheKey = AppConstants.CACHE_CAPTCHA + account;
+        // 先检查验证码 FIXME 测试需要，暂时屏蔽
+        /*String cacheKey = AppConstants.CACHE_CAPTCHA + account;
         String cacheCaptcha = byteRedisClient.getByteObj(cacheKey, String.class);
         if (StringUtils.isBlank(cacheCaptcha)) {
             return new JsonResult(401, "验证码已过期，请刷新重试！");
         }
         if (!captcha.equals(cacheCaptcha)) {
             return new JsonResult(401, "请输入正确的验证码！");
-        }
+        }*/
 
         if (key == null || !key.equals(getMd5Url(id))) {
             return new JsonResult(401, "秒杀请求无效！");

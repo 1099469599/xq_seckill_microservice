@@ -10,6 +10,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
@@ -115,6 +116,47 @@ public enum LianJiaCrawler {
             bodyLength += responseBody.length();
 
             LOGGER.info("执行GET请求:{}", httpGet);
+            LOGGER.info("当前ResponseBody Length:{}K, 累计ResponseBody Length:{}K", responseBody.length() / 1024, bodyLength / 1024);
+        } catch (ClientProtocolException e) {
+            LOGGER.error(e.getMessage(), e);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+        return responseBody;
+    }
+
+    /**
+     * 执行Post请求
+     *
+     * @param url
+     * @return
+     */
+    public static String doPost(String url) {
+        String responseBody = "";
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        try {
+            ResponseHandler<String> responseHandler = response -> {
+                int status = response.getStatusLine().getStatusCode();
+                if (status >= 200 && status < 300) {
+                    HttpEntity entity = response.getEntity();
+                    return entity != null ? EntityUtils.toString(entity) : null;
+                } else {
+                    throw new ClientProtocolException("Unexpected response status: " + status);
+                }
+            };
+
+            HttpPost httpPost = new HttpPost(url);
+            responseBody = httpClient.execute(httpPost, responseHandler);
+
+            bodyLength += responseBody.length();
+
+            LOGGER.info("执行POST请求:{}", httpPost);
             LOGGER.info("当前ResponseBody Length:{}K, 累计ResponseBody Length:{}K", responseBody.length() / 1024, bodyLength / 1024);
         } catch (ClientProtocolException e) {
             LOGGER.error(e.getMessage(), e);
