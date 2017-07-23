@@ -4,8 +4,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://platform:p1atf0rmds*lovexq.NET@192.168.31.148:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@192.168.31.148:8002/eureka/
-      #defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka/
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka/
 ## LOGGING
 logging:
   path: /home/net/lovexq/seckill/log/
