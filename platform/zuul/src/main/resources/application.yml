@@ -4,7 +4,8 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka/
+      defaultZone: http://platform:p1atf0rmds*lovexq.NET@192.168.31.148:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@192.168.31.148:8002/eureka/
+      #defaultZone: http://platform:p1atf0rmds*lovexq.NET@eureka1:8001/eureka/,http://platform:p1atf0rmds*lovexq.NET@eureka2:8002/eureka/
 ## LOGGING
 logging:
   path: /home/net/lovexq/seckill/log/
@@ -18,7 +19,7 @@ logging:
     org.apache.http: WARN
     org.hibernate: WARN
     org.springframework: WARN
-    org.springframework.boot: WARN
+    org.springframework.boot: INFO
     org.thymeleaf: WARN
 
 ## EMBEDDED SERVER CONFIGURATION (ServerProperties)
@@ -27,30 +28,27 @@ server:
     enabled: true
     mime-types: text/xml,text/css,text/plain,application/xml,application/json,application/javascript
     min-response-size: 1024
-  session-timeout: 3600
-  tomcat:
-    uri-encoding: UTF-8
 
 ##timeout config
-hystrix:
-  command:
-    default:
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: 60000
-ribbon:
-  ReadTimeout: 60000
-  ConnectTimeout: 60000
-  MaxAutoRetries: 0
-  MaxAutoRetriesNextServer: 1
-zuul:
-  max:
-    host:
-      connections: 5000
-  host:
-    socket-timeout-millis: 60000
-    connect-timeout-millis: 60000
-  sensitive-headers:
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 60000
+#ribbon:
+#  ReadTimeout: 60000
+#  ConnectTimeout: 60000
+#  MaxAutoRetries: 0
+#  MaxAutoRetriesNextServer: 1
+#zuul:
+#  max:
+#    host:
+#      connections: 5000
+#  host:
+#    socket-timeout-millis: 60000
+#    connect-timeout-millis: 60000
+#  sensitive-headers:
