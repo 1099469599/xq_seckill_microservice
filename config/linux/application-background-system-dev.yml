@@ -5,20 +5,20 @@ app:
     master:
       name: master
       driverClass: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.31.148:33006/db_seckill?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
+      url: jdbc:mysql://192.168.9.143:33006/db_seckill?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
       username: seckill_app
       password: app@seckill
     slaves:
       slave1:
         name: slave1
         driverClass: com.mysql.jdbc.Driver
-        url: jdbc:mysql://192.168.31.148:33007/db_seckill?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
+        url: jdbc:mysql://192.168.9.143:33007/db_seckill?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
         username: seckill_app
         password: app@seckill
       slave2:
         name: slave2
         driverClass: com.mysql.jdbc.Driver
-        url: jdbc:mysql://192.168.31.148:33008/db_seckill?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
+        url: jdbc:mysql://192.168.9.143:33008/db_seckill?useSSL=false&autoReconnect=true&useOldAliasMetadataBehavior=true
         username: seckill_app
         password: app@seckill
   privateSalt: 29bf9a9a$2dcc$11e7$a638$0090f5f26733
@@ -54,7 +54,7 @@ spring:
       enabled: true
   ## REDIS (RedisProperties)
   redis:
-    host: 192.168.31.148
+    host: 192.168.9.143
     port: 6379
     database: 0
     pool:
@@ -64,7 +64,7 @@ spring:
       maxWait: 60000
     timeout: 10000
   rabbitmq:
-    host: 192.168.31.148
+    host: 192.168.9.143
     port: 5672
     username: guest
     password: guest
